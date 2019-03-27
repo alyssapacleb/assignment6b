@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 
+var selectedPortrait:String?
+
 class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
     // Outlets

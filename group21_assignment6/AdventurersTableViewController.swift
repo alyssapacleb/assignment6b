@@ -11,13 +11,13 @@ import CoreData
 
 var adventurers: [String] = []
 var Adventurers: [NSManagedObject] = []
-var selectedPortrait:String?
+var selectedAdventurer: NSManagedObject?
 
 class AdventurersTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(Adventurers)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -38,6 +38,7 @@ class AdventurersTableViewController: UITableViewController {
         
         do {
             Adventurers = try managedContext.fetch(fetchRequest)
+            tableView.reloadData()
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
@@ -75,14 +76,17 @@ class AdventurersTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedAdventurer = Adventurers[indexPath.row]
+        print(selectedAdventurer!)
+    }
 
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
-    }
-    */
+    }*/
 
     /*
     // Override to support editing the table view.

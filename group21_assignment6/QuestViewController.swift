@@ -10,12 +10,19 @@ import UIKit
 
 class QuestViewController: UIViewController {
 
+    @IBOutlet weak var questImageView: UIImageView!
+    @IBOutlet weak var questLabel1: UILabel!
+    @IBOutlet weak var questLabel2: UILabel!
+    @IBOutlet weak var questLabel3: UILabel!
+    @IBOutlet weak var questTextView: UITextView!
     @IBAction func endQuest(_ sender: Any) {
         self.dismiss(animated: true, completion: endQuest)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //print(selectedAdventurer!.value(forKeyPath: "portrait") as! String)
+        //questImageView.image = UIImage(named: selectedAdventurer!.value(forKeyPath: "portrait") as! String)!
 
         // Do any additional setup after loading the view.
     }
