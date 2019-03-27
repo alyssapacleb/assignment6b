@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zjw-wi-xWq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zjw-wi-xWq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,22 +21,66 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="adventCell" id="yc0-Av-hJN">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="adventCell" rowHeight="137" id="yc0-Av-hJN" customClass="AdventurersTableViewCell" customModule="group21_assignment6" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="137"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yc0-Av-hJN" id="vFU-tx-n2E">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="136.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gsg-IB-GNb">
+                                            <rect key="frame" x="16" y="11" width="115" height="115"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="gsg-IB-GNb" secondAttribute="height" multiplier="1:1" id="USw-yu-Ppu"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gzo-zb-cRF">
+                                            <rect key="frame" x="151" y="31" width="59.5" height="30"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1V5-gD-R2y">
+                                            <rect key="frame" x="191" y="75" width="168" height="51"/>
+                                            <accessibility key="accessibilityConfiguration">
+                                                <accessibilityTraits key="traits" none="YES"/>
+                                            </accessibility>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17B-Av-TwT">
+                                            <rect key="frame" x="299.5" y="31" width="59.5" height="30.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Gzo-zb-cRF" firstAttribute="leading" secondItem="gsg-IB-GNb" secondAttribute="trailing" constant="20" id="1Mk-X5-5aU"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="1V5-gD-R2y" secondAttribute="trailing" id="9TJ-9E-6os"/>
+                                        <constraint firstItem="1V5-gD-R2y" firstAttribute="top" secondItem="Gzo-zb-cRF" secondAttribute="bottom" constant="14" id="Isz-Rk-SBH"/>
+                                        <constraint firstItem="gsg-IB-GNb" firstAttribute="leading" secondItem="vFU-tx-n2E" secondAttribute="leadingMargin" id="K1v-Qw-gc7"/>
+                                        <constraint firstItem="1V5-gD-R2y" firstAttribute="top" secondItem="Gzo-zb-cRF" secondAttribute="bottom" constant="14" id="Kvo-oq-Xlc"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="1V5-gD-R2y" secondAttribute="bottom" id="c5n-fA-XDi"/>
+                                        <constraint firstItem="gsg-IB-GNb" firstAttribute="top" secondItem="vFU-tx-n2E" secondAttribute="topMargin" id="d3Z-aB-scx"/>
+                                        <constraint firstItem="1V5-gD-R2y" firstAttribute="top" secondItem="17B-Av-TwT" secondAttribute="bottom" constant="14" id="dUW-E3-jvU"/>
+                                        <constraint firstItem="17B-Av-TwT" firstAttribute="trailing" secondItem="vFU-tx-n2E" secondAttribute="trailingMargin" id="eiT-Ph-xRs"/>
+                                        <constraint firstItem="Gzo-zb-cRF" firstAttribute="top" secondItem="vFU-tx-n2E" secondAttribute="topMargin" constant="20" id="vDA-9B-ujI"/>
+                                        <constraint firstItem="1V5-gD-R2y" firstAttribute="leading" secondItem="gsg-IB-GNb" secondAttribute="trailing" constant="60" id="yYw-OS-Jxt"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="gsg-IB-GNb" secondAttribute="bottom" id="z5W-3s-qgj"/>
+                                        <constraint firstItem="17B-Av-TwT" firstAttribute="top" secondItem="vFU-tx-n2E" secondAttribute="topMargin" constant="20" id="ze5-sQ-G7F"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="tableImageView" destination="gsg-IB-GNb" id="no6-XD-Xri"/>
+                                    <outlet property="tableLabel1" destination="Gzo-zb-cRF" id="Sb0-DZ-Qzm"/>
+                                    <outlet property="tableLabel2" destination="1V5-gD-R2y" id="FsP-8Z-8nM"/>
+                                    <outlet property="tableLabel3" destination="17B-Av-TwT" id="8lx-wr-yfN"/>
                                     <segue destination="BYZ-38-t0r" kind="presentation" id="hZ6-Vb-bUr"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="TXv-iH-NGN" id="Osg-PI-jFQ"/>
-                            <outlet property="delegate" destination="TXv-iH-NGN" id="hGT-3g-djo"/>
-                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Adventurers" id="vbu-TK-TQn">
                         <barButtonItem key="leftBarButtonItem" title="Add Member" id="ZwC-8C-n1e">
@@ -43,13 +89,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="AdventurersTableView" destination="pZT-H2-7Zd" id="Wuf-Py-L5I"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jr-iG-6A9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="966" y="-186"/>
+            <point key="canvasLocation" x="965.60000000000002" y="-186.65667166416793"/>
         </scene>
         <!--RecruitmentViewController-->
         <scene sceneID="2xx-MW-mn7">
@@ -104,7 +147,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OFR-Xs-kA8">
-                                                    <rect key="frame" x="8" y="28" width="101" height="81"/>
+                                                    <rect key="frame" x="8" y="8" width="101" height="101"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
@@ -304,6 +347,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Yuffie" width="644" height="644"/>
+        <image name="Yuffie" width="322" height="322"/>
     </resources>
 </document>

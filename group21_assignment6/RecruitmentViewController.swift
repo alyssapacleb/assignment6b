@@ -17,9 +17,6 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     @IBOutlet weak var AdventurersCollectionView: UICollectionView!
     
     // Variables
-    var adventurers: [String] = []
-    var Adventurers: [NSManagedObject] = []
-    var selectedPortrait:String?
     let identifier = "recruitmentCollectionViewCell"
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     private let itemsPerRow: CGFloat = 3
@@ -52,10 +49,45 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     func addAdventurer() {
         if !(nameTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty) && !(classTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty){
             print("yes")
-            save(name: nameTextField.text!, _class: classTextField.text!, portrait: selectedPortrait!)
+            self.save(name: nameTextField.text!, _class: classTextField.text!, portrait: selectedPortrait!)
             self.dismiss(animated: true, completion: nil)
-        } else { print("Please enter a valid name and class, asshole.")}
+        } else { print("Please enter a valid name and class.")}
+    }
+    
+    // Save adventurer to core data
+    func save(name: String, _class: String, portrait: String) {
         
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        // 1
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // 2
+        let entity = NSEntityDescription.entity(forEntityName: "Adventurer", in: managedContext)!
+        
+        let person = NSManagedObject(entity: entity, insertInto: managedContext)
+        
+        // 3
+        let AtMod = arc4random_uniform(5)+1
+        let HP = arc4random_uniform(200)+20
+        person.setValue(AtMod, forKey: "attack_modifier")
+        person.setValue(HP, forKey: "current_hitpoints")
+        person.setValue(1, forKey: "level")
+        person.setValue(name, forKey: "name")
+        person.setValue(_class, forKey: "profession")
+        person.setValue(portrait, forKey: "portrait")
+        person.setValue(HP, forKey: "total_hitpoints")
+        
+        // 4
+        do {
+            try managedContext.save()
+            Adventurers.append(person)
+            print(Adventurers)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
     }
     
     // Collection View Flow Layout
@@ -102,7 +134,6 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     
     // Show selected cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //addToList.append(objectsArray[indexPath.row])
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 2.0
         cell?.layer.borderColor = UIColor.gray.cgColor
@@ -110,45 +141,10 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
         print(selectedPortrait!)
     }
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        //addToList.append(objectsArray[indexPath.row])
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 0
     }
     
-    // Save adventurer to core data
-    func save(name: String, _class: String, portrait: String) {
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        // 1
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        // 2
-        let entity = NSEntityDescription.entity(forEntityName: "Adventurer", in: managedContext)!
-        
-        let person = NSManagedObject(entity: entity, insertInto: managedContext)
-        
-        // 3
-        let AtMod = arc4random_uniform(5)+1
-        let HP = arc4random_uniform(200)+20
-        person.setValue(AtMod, forKey: "attack_modifier")
-        person.setValue(HP, forKey: "current_hitpoints")
-        person.setValue(1, forKey: "level")
-        person.setValue(name, forKey: "name")
-        person.setValue(_class, forKey: "profession")
-        person.setValue(portrait, forKey: "portrait")
-        person.setValue(HP, forKey: "total_hitpoints")
-        
-        // 4
-        do {
-            try managedContext.save()
-            Adventurers.append(person)
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

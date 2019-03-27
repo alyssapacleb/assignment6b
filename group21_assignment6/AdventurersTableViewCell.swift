@@ -10,6 +10,19 @@ import UIKit
 
 class AdventurersTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var tableImageView: UIImageView!
+    @IBOutlet weak var tableLabel1: UILabel!
+    @IBOutlet weak var tableLabel2: UILabel!
+    @IBOutlet weak var tableLabel3: UILabel!
+    
+    func displayContent(image: UIImage, label1: String, label2: String, label3: String){
+        tableImageView.image = image
+        tableLabel1.text = label1
+        tableLabel2.text = label2
+        tableLabel3.text = label3
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

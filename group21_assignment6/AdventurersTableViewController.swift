@@ -7,23 +7,40 @@
 //
 
 import UIKit
+import CoreData
+
+var adventurers: [String] = []
+var Adventurers: [NSManagedObject] = []
+var selectedPortrait:String?
 
 class AdventurersTableViewController: UITableViewController {
-    @IBOutlet weak var AdventurersTableView: UITableView!
-    
-    var array:[String] = ["1","2","3"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AdventurersTableView.delegate = self
-        AdventurersTableView.dataSource = self
-        AdventurersTableView.rowHeight = 100
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Adventurer")
+        
+        do {
+            Adventurers = try managedContext.fetch(fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,20 +57,22 @@ class AdventurersTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return array.count
+        return Adventurers.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell?
-        cell = tableView.dequeueReusableCell(withIdentifier: "adventCell", for: indexPath)
+        let person = Adventurers[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "adventCell", for: indexPath) as! AdventurersTableViewCell
+        let cellImage = UIImage(named: person.value(forKeyPath: "portrait") as! String)!
+        let label1 = person.value(forKeyPath: "name") as! String
+        let label2 = person.value(forKeyPath: "profession") as! String + "\n" + "Attack:  " + String(person.value(forKeyPath: "attack_modifier") as! Int16) + "\n" + "HP:       " + String(person.value(forKeyPath: "current_hitpoints") as! Int16) + "\\" + String(person.value(forKeyPath: "total_hitpoints") as! Int16)
+        let label3 = String(person.value(forKeyPath: "level") as! Int16)
 
         // Configure the cell...
-        let idx = array[indexPath.row]
-        cell!.textLabel?.text = idx
-        
+        cell.displayContent(image: cellImage, label1: label1, label2: label2, label3: label3)
 
-        return cell!
+        return cell
     }
     
 
