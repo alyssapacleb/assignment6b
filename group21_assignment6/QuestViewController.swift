@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class QuestViewController: UIViewController {
 
@@ -19,8 +20,11 @@ class QuestViewController: UIViewController {
         self.dismiss(animated: true, completion: endQuest)
     }
     
+    var currentAdventurer: NSManagedObject?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Current adventurer: \(currentAdventurer)")
         //print(selectedAdventurer!.value(forKeyPath: "portrait") as! String)
         //questImageView.image = UIImage(named: selectedAdventurer!.value(forKeyPath: "portrait") as! String)!
 

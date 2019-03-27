@@ -105,7 +105,7 @@ class AdventurersTableViewController: UITableViewController {
             }
             Adventurers.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            print(Adventurers)
+            //print(Adventurers)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -127,14 +127,16 @@ class AdventurersTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "QuestViewSegue" {
+            let ExchangeViewData = segue.destination as! QuestViewController
+            ExchangeViewData.currentAdventurer = selectedAdventurer
+        }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
 
 }
