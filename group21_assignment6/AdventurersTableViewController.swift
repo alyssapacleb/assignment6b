@@ -93,6 +93,16 @@ class AdventurersTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            let managedContext = appDelegate.persistentContainer.viewContext
+            managedContext.delete(Adventurers[indexPath.row])
+            do {
+                try managedContext.save()
+            } catch {
+                return
+            }
             Adventurers.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
             print(Adventurers)
