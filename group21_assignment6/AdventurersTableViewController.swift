@@ -140,3 +140,18 @@ class AdventurersTableViewController: UITableViewController {
     }
 
 }
+
+
+/*
+ Instructions:
+ The adventurers' data are stored via Core Data.
+ 
+ The adventurers will have attributes that at least include name, profession, level, current and total hit points, attack power multiplier, and a portrait.
+ 
+ This list of adventurers and their stats should automatically update whenever the table view is displayed (but the order of adventurers does not have to be consistent).
+ 
+ The adventurers will regain all their hitpoints whenever they return to this main screen.
+ 
+ The user can delete an adventurer at any time and this will both remove that adventurer from the table as well as remove their data from persistent storage.
+ 
+ */

@@ -30,19 +30,30 @@ class QuestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Current adventurer: \(currentAdventurer)")
+        //print(currentAdventurer!.value(forKey:"name") as! String)
+        
+        
+        
         //print(selectedAdventurer!.value(forKeyPath: "portrait") as! String)
         //questImageView.image = UIImage(named: selectedAdventurer!.value(forKeyPath: "portrait") as! String)!
-        //TIMER EVERY TWO SECONDS.
         
+        //TIMER EVERY TWO SECONDS.
         timer = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
         
         // Do any additional setup after loading the view.
     }
     
-
+    //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS
     @objc func reloadTimer() {
-        //PRINT FIRE EVERY 2 SECONDS
-        print("Fire")
+        // var TEXTVIEW DISPLAY = (name) attacks for (AtMod*random number between 5-10) damage
+        var damage = arc4random_uniform(5)+1 // MULTIPLY BY ATTACK MODIFIER
+        var strDamage = String(damage)
+        var theHeroName = "Yuffie" //CHANGE TO NSOBJECT WITH KEY VALUE NAME
+        //var theEnemyHealth = arc4random_uniform(15)+55
+        //var strEnemyHealth = String(theEnemyHealth)
+        print(theHeroName + " attacks for " + strDamage + " damage")
+        //print("enemy health: " + strEnemyHealth)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,8 +91,6 @@ class QuestViewController: UIViewController {
  Another timer will determine when the enemy can act, and at every timer event, the enemy will either attack for damage within a range (randomized), or wait. When the enemy attacks, the adventurer takes damage. If the adventurer's hit points go to zero or less, the adventurer's current hit points will be set to zero, and the quest will end (i.e. the timers will stop running).
  
  The quest log will output text for all events that happen during the timer, and while the exact wording of this text is up to you, it should include relevant details such as who attacked whom and for how much damage.
- 
- 
- 
+
  */
 

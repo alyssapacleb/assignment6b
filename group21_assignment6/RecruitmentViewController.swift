@@ -158,3 +158,20 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     */
 
 }
+
+
+
+
+/*
+ Instructions:
+ Users can use text fields to set the adventurer's name and profession. They should not be able to set either to only whitespace (i.e. blank characters).
+ 
+ Users can select the adventurer's appearance via a collection view. The collection view cell should in some way highlight, so the users can see their choice. This can be done using the UICollectionViewDelegate functions, didSelectItemAt and didDeselectItemAt
+ 
+ The adventurer's level will default to 1 upon creation.
+
+ The adventurer's hit points and attack power multiplier will be randomly assigned (preferrably within a range).
+ 
+ When the user clicks "Save," the adventurer will be saved to persistent storage via Core Data
+ */
+
