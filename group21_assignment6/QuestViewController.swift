@@ -136,12 +136,15 @@ class QuestViewController: UIViewController {
             let enemyName = (currentEnemy?.name)! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
             questTextView?.text = (questTextView?.text)! + "\n" + enemyName + " attacks for " + strDamage + " damage"
             adv_currenthp! -= damage
-            questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
             if adv_currenthp! <= 0 {
-                
+                timer1.invalidate()
+                timer2.invalidate()
+                adv_currenthp! = 0
+                questTextView?.text = (questTextView?.text)! + "\n" + adv_name! + " is defeated!" + "\nThe quest ended."
             }
+            questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         } else {
-            questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + "is waiting..."
+            questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is waiting..."
         }
         
     }
