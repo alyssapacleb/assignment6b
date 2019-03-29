@@ -20,6 +20,7 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     
     // Variables
     let identifier = "recruitmentCollectionViewCell"
+    var portrait_chosen = false
     private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
     private let itemsPerRow: CGFloat = 3
     
@@ -49,11 +50,11 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     
     // Check text field
     func addAdventurer() {
-        if !(nameTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty) && !(classTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty){
+        if !(nameTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty) && !(classTextField.text!.trimmingCharacters(in: .whitespaces).isEmpty) && portrait_chosen {
             print("yes")
             self.save(name: nameTextField.text!, _class: classTextField.text!, portrait: selectedPortrait!)
             self.dismiss(animated: true, completion: nil)
-        } else { print("Please enter a valid name and class.")}
+        } else { print("Please enter a valid name and class and select a portrait.")}
     }
     
     // Save adventurer to core data
@@ -141,12 +142,14 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     
     // Show selected cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        portrait_chosen = true
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 2.0
         cell?.layer.borderColor = UIColor.gray.cgColor
         selectedPortrait = adventurers[indexPath.row]
         print(selectedPortrait!)
     }
+    
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.layer.borderWidth = 0
