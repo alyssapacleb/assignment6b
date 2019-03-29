@@ -237,6 +237,11 @@ class QuestViewController: UIViewController {
         
     }
     
+    func endQuest() {
+        
+        
+    }
+    
     /*
     // MARK: - Navigation
 
