@@ -19,26 +19,29 @@ class QuestViewController: UIViewController {
     @IBOutlet weak var questLabel3: UILabel!
     @IBOutlet weak var questTextView: UITextView!
     @IBAction func endQuest(_ sender: Any) {
-        timer.invalidate()
+        timer1.invalidate()
+        timer2.invalidate()
         self.dismiss(animated: true, completion: endQuest)
     }
     
-    var timer = Timer()
+    var timer1 = Timer()
+    var timer2 = Timer()
     
     var currentAdventurer: NSManagedObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Current adventurer: \(currentAdventurer)")
-        //print(currentAdventurer!.value(forKey:"name") as! String)
-        
-        
+        print("Quest View adventurer: \(currentAdventurer!)")
+        questImageView.image = UIImage(named: currentAdventurer!.value(forKeyPath: "portrait") as! String)!
+        questLabel1?.text = currentAdventurer!.value(forKeyPath: "name") as? String
+        questLabel2?.text = currentAdventurer!.value(forKeyPath: "profession") as! String + "\n" + "Attack:  " + String(currentAdventurer!.value(forKeyPath: "attack_modifier") as! Int16) + "\n" + "HP:       " + String(currentAdventurer!.value(forKeyPath: "current_hitpoints") as! Int16) + "\\" + String(currentAdventurer!.value(forKeyPath: "total_hitpoints") as! Int16)
+        questLabel3?.text = String(currentAdventurer!.value(forKeyPath: "level") as! Int16)
         
         //print(selectedAdventurer!.value(forKeyPath: "portrait") as! String)
         //questImageView.image = UIImage(named: selectedAdventurer!.value(forKeyPath: "portrait") as! String)!
         
         //TIMER EVERY TWO SECONDS.
-        timer = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
+        timer1 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
         
         // Do any additional setup after loading the view.
     }
@@ -46,12 +49,12 @@ class QuestViewController: UIViewController {
     //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS
     @objc func reloadTimer() {
         // var TEXTVIEW DISPLAY = (name) attacks for (AtMod*random number between 5-10) damage
-        var damage = arc4random_uniform(5)+1 // MULTIPLY BY ATTACK MODIFIER
-        var strDamage = String(damage)
-        var theHeroName = "Yuffie" //CHANGE TO NSOBJECT WITH KEY VALUE NAME
+        let damage = Int(arc4random_uniform(5)+1)*Int(currentAdventurer!.value(forKeyPath: "attack_modifier") as! Int16) // MULTIPLY BY ATTACK MODIFIER
+        let strDamage = String(damage)
+        let theHeroName = currentAdventurer!.value(forKeyPath: "name") as! String //CHANGE TO NSOBJECT WITH KEY VALUE NAME
         //var theEnemyHealth = arc4random_uniform(15)+55
         //var strEnemyHealth = String(theEnemyHealth)
-        print(theHeroName + " attacks for " + strDamage + " damage")
+        questTextView?.text = (questTextView?.text)! + "\n" + theHeroName + " attacks for " + strDamage + " damage"
         //print("enemy health: " + strEnemyHealth)
         
     }

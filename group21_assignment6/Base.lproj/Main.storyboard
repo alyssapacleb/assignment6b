@@ -79,7 +79,6 @@
                                     <outlet property="tableLabel1" destination="Gzo-zb-cRF" id="Sb0-DZ-Qzm"/>
                                     <outlet property="tableLabel2" destination="1V5-gD-R2y" id="FsP-8Z-8nM"/>
                                     <outlet property="tableLabel3" destination="17B-Av-TwT" id="8lx-wr-yfN"/>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="QuestViewSegue" id="hZ6-Vb-bUr"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -91,6 +90,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="questViewSegue" id="Foy-fv-8lh"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jr-iG-6A9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
