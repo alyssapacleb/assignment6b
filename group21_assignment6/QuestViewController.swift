@@ -60,15 +60,15 @@ class QuestViewController: UIViewController {
         print("Current adventurer: \(currentAdventurer!)")
         //print(currentAdventurer!.value(forKey:"name") as! String)
 
-        adv_name = (selectedAdventurer!.value(forKeyPath: "name") as! String)
-        adv_profession = (selectedAdventurer!.value(forKeyPath: "profession") as! String)
-        adv_attack = (selectedAdventurer!.value(forKeyPath: "attack_modifier") as! IntegerLiteralType)
-        adv_defense = (selectedAdventurer!.value(forKeyPath: "defense") as! IntegerLiteralType)
-        adv_evasion = (selectedAdventurer!.value(forKeyPath: "evasion") as! IntegerLiteralType)
-        adv_portrait = UIImage(named: (selectedAdventurer!.value(forKeyPath: "portrait") as! String))!
-        adv_currenthp = (selectedAdventurer!.value(forKeyPath: "current_hitpoints") as! IntegerLiteralType)
-        adv_maxhp = (selectedAdventurer!.value(forKeyPath: "total_hitpoints") as! IntegerLiteralType)
-        adv_level = (selectedAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
+        adv_name = (currentAdventurer!.value(forKeyPath: "name") as! String)
+        adv_profession = (currentAdventurer!.value(forKeyPath: "profession") as! String)
+        adv_attack = (currentAdventurer!.value(forKeyPath: "attack_modifier") as! IntegerLiteralType)
+        adv_defense = (currentAdventurer!.value(forKeyPath: "defense") as! IntegerLiteralType)
+        adv_evasion = (currentAdventurer!.value(forKeyPath: "evasion") as! IntegerLiteralType)
+        adv_portrait = UIImage(named: (currentAdventurer!.value(forKeyPath: "portrait") as! String))!
+        adv_currenthp = (currentAdventurer!.value(forKeyPath: "current_hitpoints") as! IntegerLiteralType)
+        adv_maxhp = (currentAdventurer!.value(forKeyPath: "total_hitpoints") as! IntegerLiteralType)
+        adv_level = (currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
         
         questImageView.image = adv_portrait!
         questLabel1.text = adv_name!
