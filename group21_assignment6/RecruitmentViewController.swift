@@ -75,6 +75,8 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
         let AtMod = arc4random_uniform(5)+1
         let HP_static = arc4random_uniform(200)+20
         let HP_current = HP_static
+        let defense = arc4random_uniform(10)+1
+        let evasion = arc4random_uniform(5)+1
         person.setValue(AtMod, forKey: "attack_modifier")
         person.setValue(HP_current, forKey: "current_hitpoints")
         person.setValue(1, forKey: "level")
@@ -82,6 +84,8 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
         person.setValue(_class, forKey: "profession")
         person.setValue(portrait, forKey: "portrait")
         person.setValue(HP_static, forKey: "total_hitpoints")
+        person.setValue(defense, forKey: "defense")
+        person.setValue(evasion, forKey: "evasion")
         
         // 4
         do {

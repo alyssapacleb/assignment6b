@@ -23,6 +23,7 @@ class Enemy {
         self.level = level
         self.hp = hp
         self.attack = attack
+        
     }
     
 }
@@ -40,29 +41,40 @@ class QuestViewController: UIViewController {
     }
     
     var timer = Timer()
-    
     var currentAdventurer: NSManagedObject?
+    
+    // Adventurer variables to be set when view loads
+    var adv_name: String?
+    var adv_profession: String?
+    var adv_attack: Int?
+    var adv_defense: Int?
+    var adv_evasion: Int?
+    var adv_currenthp: Int?
+    var adv_maxhp: Int?
+    var adv_level: Int?
+    var adv_portrait: UIImage?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Current adventurer: \(currentAdventurer!)")
         //print(currentAdventurer!.value(forKey:"name") as! String)
+
+        adv_name = (selectedAdventurer!.value(forKeyPath: "name") as! String)
+        adv_profession = (selectedAdventurer!.value(forKeyPath: "profession") as! String)
+        adv_attack = (selectedAdventurer!.value(forKeyPath: "attack_modifier") as! IntegerLiteralType)
+        adv_defense = (selectedAdventurer!.value(forKeyPath: "defense") as! IntegerLiteralType)
+        adv_evasion = (selectedAdventurer!.value(forKeyPath: "evasion") as! IntegerLiteralType)
+        adv_portrait = UIImage(named: (selectedAdventurer!.value(forKeyPath: "portrait") as! String))!
+        adv_currenthp = (selectedAdventurer!.value(forKeyPath: "current_hitpoints") as! IntegerLiteralType)
+        adv_maxhp = (selectedAdventurer!.value(forKeyPath: "total_hitpoints") as! IntegerLiteralType)
+        adv_level = (selectedAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
         
-        // Define constants to specify adventurer values which will not need ot change/update as the quest progress (e.g. name, class, etc.)
-        let name = (selectedAdventurer!.value(forKeyPath: "name") as! String)
-        let profession = (selectedAdventurer!.value(forKeyPath: "profession") as! String)
-        let attack = (selectedAdventurer!.value(forKeyPath: "attack_modifier") as! IntegerLiteralType)
-        let portrait = UIImage(named: (selectedAdventurer!.value(forKeyPath: "portrait") as! String))!
-        let max_hp = (selectedAdventurer!.value(forKeyPath: "total_hitpoints") as! IntegerLiteralType)
-        
-        // Define variables for adventurer values which will update as quest progresses (HP & Level)
-        var current_hp = (selectedAdventurer!.value(forKeyPath: "current_hitpoints") as! IntegerLiteralType)
-        var level = (selectedAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
-        
-        questImageView.image = portrait
-        questLabel1.text = name
-        questLabel3.text = String(level)
-        questLabel2.text = profession + "\nAttack: " + String(attack) + "\nHP: " + String(current_hp) + "/" + String(max_hp)
+        questImageView.image = adv_portrait!
+        questLabel1.text = adv_name!
+        questLabel3.text = String(adv_level!)
+        //questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+        questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         
         //TIMER EVERY TWO SECONDS.
         timer = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
@@ -73,7 +85,9 @@ class QuestViewController: UIViewController {
     // This function is used to set/update the text labels
     func setLabels() {
         
-        
+        questLabel3.text = String(adv_level!)
+        //questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+        questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         
     }
     
@@ -96,6 +110,7 @@ class QuestViewController: UIViewController {
     }
     
     func endQuest() {
+        
         
     }
     
