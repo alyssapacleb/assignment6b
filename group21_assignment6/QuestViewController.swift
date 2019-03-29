@@ -88,7 +88,7 @@ class QuestViewController: UIViewController {
         adv_level = (currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
         
         currentEnemy = Enemy()
-        
+        self.questTextView.layoutManager.allowsNonContiguousLayout = false
         questImageView.image = adv_portrait!
         questLabel1.text = adv_name!
         questLabel3.text = String(adv_level!)
@@ -112,6 +112,8 @@ class QuestViewController: UIViewController {
         questLabel3.text = String(adv_level!)
         //questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+        let stringLength:Int = self.questTextView.text.count
+        self.questTextView.scrollRangeToVisible(NSMakeRange(stringLength-1, 0))
         
     }
     
@@ -132,14 +134,16 @@ class QuestViewController: UIViewController {
         let theHeroName = adv_name! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
         questTextView?.text = (questTextView?.text)! + "\n" + theHeroName + " attacks for " + strDamage + " damage"
         currentEnemy?.curhp -= damage
-        var currentLevel = currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType
+        self.setLabels()
+        //var currentLevel = currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType
         if (currentEnemy?.curhp)! <= 0 {
             timer2.invalidate()
             questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!"
             //================= increase level in table view display =================
             //currentAdventurer!.value(forKeyPath: "level") += 1
-            
-            currentAdventurer!.setValue(currentLevel + 1, forKey: "level")
+            adv_level! += 1
+            currentAdventurer!.setValue(adv_level!, forKey: "level")
+            self.setLabels()
             //print(currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
             
             currentEnemy = Enemy()
@@ -159,15 +163,19 @@ class QuestViewController: UIViewController {
             let enemyName = (currentEnemy?.name)! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
             questTextView?.text = (questTextView?.text)! + "\n" + enemyName + " attacks for " + strDamage + " damage"
             adv_currenthp! -= damage
+            self.setLabels()
             if adv_currenthp! <= 0 {
                 timer1.invalidate()
                 timer2.invalidate()
                 adv_currenthp! = 0
                 questTextView?.text = (questTextView?.text)! + "\n" + adv_name! + " is defeated!" + "\nThe quest ended."
+                self.setLabels()
             }
-            questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+            self.setLabels()
+            //questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         } else {
             questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is waiting..."
+            self.setLabels()
         }
         
     }
