@@ -78,8 +78,8 @@ class AdventurersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAdventurer = Adventurers[indexPath.row]
-        print("Table View selection: \(selectedAdventurer!)")
-        self.performSegue(withIdentifier: "questViewSegue", sender: nil)
+        self.performSegue(withIdentifier: "QuestViewSegue", sender: self)
+        //print(selectedAdventurer!)
     }
 
     /*
@@ -129,10 +129,10 @@ class AdventurersTableViewController: UITableViewController {
     */
 
     // MARK: - Navigation
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "questViewSegue" {
+        if segue.identifier == "QuestViewSegue" {
             let ExchangeViewData = segue.destination as! QuestViewController
             ExchangeViewData.currentAdventurer = selectedAdventurer!
         }

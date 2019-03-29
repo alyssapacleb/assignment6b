@@ -89,7 +89,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="questViewSegue" id="Foy-fv-8lh"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="QuestViewSegue" id="mkE-Sl-Tsp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jr-iG-6A9" userLabel="First Responder" sceneMemberID="firstResponder"/>

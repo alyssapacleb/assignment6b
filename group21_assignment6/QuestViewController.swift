@@ -60,14 +60,24 @@ class QuestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Quest View adventurer: \(currentAdventurer!)")
-        questImageView.image = UIImage(named: currentAdventurer!.value(forKeyPath: "portrait") as! String)!
-        questLabel1?.text = currentAdventurer!.value(forKeyPath: "name") as? String
-        questLabel2?.text = currentAdventurer!.value(forKeyPath: "profession") as! String + "\n" + "Attack:  " + String(currentAdventurer!.value(forKeyPath: "attack_modifier") as! Int16) + "\n" + "HP:       " + String(currentAdventurer!.value(forKeyPath: "current_hitpoints") as! Int16) + "\\" + String(currentAdventurer!.value(forKeyPath: "total_hitpoints") as! Int16)
-        questLabel3?.text = String(currentAdventurer!.value(forKeyPath: "level") as! Int16)
+        print("Current adventurer: \(currentAdventurer!)")
+        //print(currentAdventurer!.value(forKey:"name") as! String)
+
+        adv_name = (currentAdventurer!.value(forKeyPath: "name") as! String)
+        adv_profession = (currentAdventurer!.value(forKeyPath: "profession") as! String)
+        adv_attack = (currentAdventurer!.value(forKeyPath: "attack_modifier") as! IntegerLiteralType)
+        adv_defense = (currentAdventurer!.value(forKeyPath: "defense") as! IntegerLiteralType)
+        adv_evasion = (currentAdventurer!.value(forKeyPath: "evasion") as! IntegerLiteralType)
+        adv_portrait = UIImage(named: (currentAdventurer!.value(forKeyPath: "portrait") as! String))!
+        adv_currenthp = (currentAdventurer!.value(forKeyPath: "current_hitpoints") as! IntegerLiteralType)
+        adv_maxhp = (currentAdventurer!.value(forKeyPath: "total_hitpoints") as! IntegerLiteralType)
+        adv_level = (currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
         
-        //print(selectedAdventurer!.value(forKeyPath: "portrait") as! String)
-        //questImageView.image = UIImage(named: selectedAdventurer!.value(forKeyPath: "portrait") as! String)!
+        questImageView.image = adv_portrait!
+        questLabel1.text = adv_name!
+        questLabel3.text = String(adv_level!)
+        //questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+        questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         
         //TIMER EVERY TWO SECONDS.
         timer1 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
