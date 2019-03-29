@@ -1,4 +1,4 @@
-# assignment6b
+# Assignment 6
 ## Additional adventurer attributes:
 Defense and evasion implemented in RecruitmentViewController.swift and QuestViewController.swift
 ## Full Enemy Type
