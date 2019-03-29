@@ -29,14 +29,16 @@ class Enemy {
     }
     
     convenience init() {
-        let selectedName = arc4random_uniform(3)
-        let nameList:[String] = ["Enemy1","Enemy2","Enemy3"]
+        let nameList:[String] = ["Glob", "Blob", "Slob", "Daniel Sanchez", "Tyson Smitter"]
+        let selectedName = arc4random_uniform(UInt32(nameList.count))
         let name_ = nameList[Int(selectedName)]
         let _level = Int(arc4random_uniform(5) + 1)
         let _hp = _level * 10
         let _attack = Int(arc4random_uniform(5)+1)*_level
         self.init(name: name_, level: _level, hp: _hp, attack: _attack)
     }
+    
+    
 }
 
 class QuestViewController: UIViewController {
@@ -70,7 +72,6 @@ class QuestViewController: UIViewController {
     var adv_portrait: UIImage?
     var delayEnemy:Timer?
     var delay = 1
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,11 +141,9 @@ class QuestViewController: UIViewController {
             timer2.invalidate()
             questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!"
             //================= increase level in table view display =================
-            //currentAdventurer!.value(forKeyPath: "level") += 1
             adv_level! += 1
             currentAdventurer!.setValue(adv_level!, forKey: "level")
             self.setLabels()
-            //print(currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
             
             currentEnemy = Enemy()
             
@@ -162,7 +161,14 @@ class QuestViewController: UIViewController {
             let strDamage = String(damage)
             let enemyName = (currentEnemy?.name)! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
             questTextView?.text = (questTextView?.text)! + "\n" + enemyName + " attacks for " + strDamage + " damage"
-            adv_currenthp! -= damage
+            let evasion_chance = Int(arc4random_uniform(25)+1)
+            if adv_evasion! > evasion_chance {
+                questTextView?.text = (questTextView?.text)! + "\n" + adv_name! + " evaded the attack!"
+            }
+            else {
+                questTextView?.text = (questTextView?.text)! + "\n" + adv_name! + " blocked " + String(adv_defense!) + " damage"
+                adv_currenthp! -= (damage - adv_defense!)
+            }
             self.setLabels()
             if adv_currenthp! <= 0 {
                 timer1.invalidate()
