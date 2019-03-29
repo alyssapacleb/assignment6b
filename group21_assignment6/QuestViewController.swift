@@ -10,6 +10,23 @@ import UIKit
 import CoreData
 import ObjectiveC
 
+class Enemy {
+    
+    var name: String
+    var level: Int
+    var hp: Int
+    var attack: Int
+    
+    init(name: String, level: Int, hp: Int, attack: Int) {
+        
+        self.name = name
+        self.level = level
+        self.hp = hp
+        self.attack = attack
+        
+    }
+    
+}
 
 class QuestViewController: UIViewController {
 
@@ -29,6 +46,18 @@ class QuestViewController: UIViewController {
     
     var currentAdventurer: NSManagedObject?
     
+    // Adventurer variables to be set when view loads
+    var adv_name: String?
+    var adv_profession: String?
+    var adv_attack: Int?
+    var adv_defense: Int?
+    var adv_evasion: Int?
+    var adv_currenthp: Int?
+    var adv_maxhp: Int?
+    var adv_level: Int?
+    var adv_portrait: UIImage?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Quest View adventurer: \(currentAdventurer!)")
@@ -44,6 +73,15 @@ class QuestViewController: UIViewController {
         timer1 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
         
         // Do any additional setup after loading the view.
+    }
+    
+    // This function is used to set/update the text labels
+    func setLabels() {
+        
+        questLabel3.text = String(adv_level!)
+        //questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+        questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+        
     }
     
     //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS
@@ -65,6 +103,7 @@ class QuestViewController: UIViewController {
     }
     
     func endQuest() {
+        
         
     }
     

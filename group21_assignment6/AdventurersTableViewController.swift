@@ -67,7 +67,7 @@ class AdventurersTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "adventCell", for: indexPath) as! AdventurersTableViewCell
         let cellImage = UIImage(named: person.value(forKeyPath: "portrait") as! String)!
         let label1 = person.value(forKeyPath: "name") as! String
-        let label2 = person.value(forKeyPath: "profession") as! String + "\n" + "Attack:  " + String(person.value(forKeyPath: "attack_modifier") as! Int16) + "\n" + "HP:       " + String(person.value(forKeyPath: "total_hitpoints") as! Int16) + "\\" + String(person.value(forKeyPath: "total_hitpoints") as! Int16)
+        let label2 = person.value(forKeyPath: "profession") as! String + "\n" + "Attack:  " + String(person.value(forKeyPath: "attack_modifier") as! Int16) + "\n" + "Defense:  " + String(person.value(forKeyPath: "defense") as! Int16) + "\n" + "Evasion:  " + String(person.value(forKeyPath: "evasion") as! Int16) + "\n" + "HP:       " + String(person.value(forKeyPath: "total_hitpoints") as! Int16) + "/" + String(person.value(forKeyPath: "total_hitpoints") as! Int16)
         let label3 = String(person.value(forKeyPath: "level") as! Int16)
 
         // Configure the cell...
