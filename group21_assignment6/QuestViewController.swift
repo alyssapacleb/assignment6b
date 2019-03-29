@@ -72,6 +72,7 @@ class QuestViewController: UIViewController {
     var adv_portrait: UIImage?
     var delayEnemy:Timer?
     var delay = 1
+    var num_enemies = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,10 +140,13 @@ class QuestViewController: UIViewController {
         //var currentLevel = currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType
         if (currentEnemy?.curhp)! <= 0 {
             timer2.invalidate()
+            num_enemies += 1
             questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!"
             //================= increase level in table view display =================
-            adv_level! += 1
-            currentAdventurer!.setValue(adv_level!, forKey: "level")
+            if num_enemies >= adv_level! {
+                adv_level! += 1
+                currentAdventurer!.setValue(adv_level!, forKey: "level")
+            }
             self.setLabels()
             
             currentEnemy = Enemy()
