@@ -68,6 +68,8 @@ class QuestViewController: UIViewController {
     var adv_maxhp: Int?
     var adv_level: Int?
     var adv_portrait: UIImage?
+    var delayEnemy:Timer?
+    var delay = 1
     
     
     override func viewDidLoad() {
@@ -95,7 +97,11 @@ class QuestViewController: UIViewController {
         
         //TIMER EVERY TWO SECONDS.
         timer1 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
-        timer2 = Timer.scheduledTimer(timeInterval:3.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
+        
+        
+        delayEnemy = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(enemyDelay), userInfo: nil, repeats: true)
+       
+        
         
         // Do any additional setup after loading the view.
     }
@@ -107,6 +113,15 @@ class QuestViewController: UIViewController {
         //questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         
+    }
+    
+    @objc func enemyDelay() {
+        delay -= 1
+        if delay <= 0 {
+            delayEnemy!.invalidate()
+            delayEnemy = nil
+            timer2 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
+        }
     }
     
     //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS
@@ -121,12 +136,13 @@ class QuestViewController: UIViewController {
             timer2.invalidate()
             questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!"
             currentEnemy = Enemy()
-            timer2 = Timer.scheduledTimer(timeInterval:3.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
+            //================= increase level in table view display =================
+            timer2 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
         }
         
     }
     
-    //THIS FUNCTION LOADS UP THE TIMER EVERY 3 SECONDS
+    //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS
     @objc func reloadTimer2() {
         // var TEXTVIEW DISPLAY = (name) attacks for (AtMod*random number between 5-10) damage
         let randomN = Int(arc4random_uniform(2))
