@@ -10,13 +10,19 @@ import UIKit
 import CoreData
 import ObjectiveC
 
-class Enemy {
+class Enemy: CustomStringConvertible {
     
     var name: String
     var level: Int
     var hp: Int
     var curhp: Int
     var attack: Int
+    
+    public var description: String {
+        
+        return "A wild \(self.name) appeared!\n  Level: \(self.level)\n  Health: \(self.hp)\n  Attack: \(self.attack)"
+        
+    }
     
     init(name: String, level: Int, hp: Int, attack: Int) {
         
@@ -51,6 +57,8 @@ class QuestViewController: UIViewController {
     @IBAction func endQuest(_ sender: Any) {
         timer1.invalidate()
         timer2.invalidate()
+        currentAdventurer!.setValue(adv_maxhp, forKey: "current_hitpoints")
+        self.setLabels()
         self.dismiss(animated: true, completion: endQuest)
     }
     
@@ -90,7 +98,8 @@ class QuestViewController: UIViewController {
         adv_level = (currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
         
         currentEnemy = Enemy()
-        self.questTextView.layoutManager.allowsNonContiguousLayout = false
+        questTextView.layoutManager.allowsNonContiguousLayout = false
+        questTextView.text = "Beginning Quest...\n\(currentEnemy!)"
         questImageView.image = adv_portrait!
         questLabel1.text = adv_name!
         questLabel3.text = String(adv_level!)
@@ -117,6 +126,16 @@ class QuestViewController: UIViewController {
         let stringLength:Int = self.questTextView.text.count
         self.questTextView.scrollRangeToVisible(NSMakeRange(stringLength-1, 0))
         
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        do {
+            try managedContext.save()
+        } catch {
+            return
+        }
+        
     }
     
     @objc func enemyDelay() {
@@ -133,7 +152,7 @@ class QuestViewController: UIViewController {
         // var TEXTVIEW DISPLAY = (name) attacks for (AtMod*random number between 5-10) damage
         let damage = Int(arc4random_uniform(5)+1)*Int(adv_attack!) // MULTIPLY BY ATTACK MODIFIER
         let strDamage = String(damage)
-        let theHeroName = adv_name! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
+        let theHeroName = adv_name!
         questTextView?.text = (questTextView?.text)! + "\n" + theHeroName + " attacks for " + strDamage + " damage"
         currentEnemy?.curhp -= damage
         self.setLabels()
@@ -141,15 +160,15 @@ class QuestViewController: UIViewController {
         if (currentEnemy?.curhp)! <= 0 {
             timer2.invalidate()
             num_enemies += 1
-            questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!"
+            questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!\n\(num_enemies) enemy(-ies) defeated since last level up"
             //================= increase level in table view display =================
             if num_enemies >= adv_level! {
-                adv_level! += 1
-                currentAdventurer!.setValue(adv_level!, forKey: "level")
+                levelUp()
             }
-            self.setLabels()
             
             currentEnemy = Enemy()
+            questTextView?.text = (questTextView?.text)! + "\n\(currentEnemy!)"
+            self.setLabels()
             
             timer2 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
         }
@@ -195,8 +214,26 @@ class QuestViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func endQuest() {
+    func levelUp() {
         
+        // Increase level by 1, reset "experience" counter, and print message to quest log
+        adv_level! += 1
+        num_enemies = 0
+        questTextView?.text = (questTextView?.text)! + "\n\(adv_name!) leveled up!"
+        
+        // Upgrade adventurer's abilities
+        adv_attack! += 1
+        adv_defense! += 1
+        adv_evasion! += 1
+        adv_maxhp! += 10
+        
+        // Set new attributes in core data
+        currentAdventurer!.setValue(adv_level!, forKey: "level")
+        currentAdventurer!.setValue(adv_attack!, forKey: "attack_modifier")
+        currentAdventurer!.setValue(adv_defense!, forKey: "defense")
+        currentAdventurer!.setValue(adv_evasion!, forKey: "evasion")
+        currentAdventurer!.setValue(adv_maxhp!, forKey: "total_hitpoints")
+        setLabels()
         
     }
     

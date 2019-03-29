@@ -35,6 +35,7 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AdventurersCollectionView.allowsMultipleSelection = false
         accessPlist()
         //AdventurersCollectionView.register(UICollectionViewCell.self, forCellReuseIdentifier: "recruitmentCollectionViewCell")
     }
@@ -143,9 +144,10 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     // Show selected cell
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         portrait_chosen = true
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.layer.borderWidth = 2.0
-        cell?.layer.borderColor = UIColor.gray.cgColor
+        print(indexPath)
+        let cell = collectionView.cellForItem(at: indexPath) as! RecruitmentCollectionViewCell
+        cell.layer.borderWidth = 2.0
+        cell.layer.borderColor = UIColor.gray.cgColor
         selectedPortrait = adventurers[indexPath.row]
         print(selectedPortrait!)
     }
