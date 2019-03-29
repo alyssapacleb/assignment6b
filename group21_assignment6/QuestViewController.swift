@@ -10,6 +10,22 @@ import UIKit
 import CoreData
 import ObjectiveC
 
+class Enemy {
+    
+    var name: String
+    var level: Int
+    var hp: Int
+    var attack: Int
+    
+    init(name: String, level: Int, hp: Int, attack: Int) {
+        
+        self.name = name
+        self.level = level
+        self.hp = hp
+        self.attack = attack
+    }
+    
+}
 
 class QuestViewController: UIViewController {
 
@@ -29,18 +45,36 @@ class QuestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Current adventurer: \(currentAdventurer)")
+        print("Current adventurer: \(currentAdventurer!)")
         //print(currentAdventurer!.value(forKey:"name") as! String)
         
+        // Define constants to specify adventurer values which will not need ot change/update as the quest progress (e.g. name, class, etc.)
+        let name = (selectedAdventurer!.value(forKeyPath: "name") as! String)
+        let profession = (selectedAdventurer!.value(forKeyPath: "profession") as! String)
+        let attack = (selectedAdventurer!.value(forKeyPath: "attack_modifier") as! IntegerLiteralType)
+        let portrait = UIImage(named: (selectedAdventurer!.value(forKeyPath: "portrait") as! String))!
+        let max_hp = (selectedAdventurer!.value(forKeyPath: "total_hitpoints") as! IntegerLiteralType)
         
+        // Define variables for adventurer values which will update as quest progresses (HP & Level)
+        var current_hp = (selectedAdventurer!.value(forKeyPath: "current_hitpoints") as! IntegerLiteralType)
+        var level = (selectedAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
         
-        //print(selectedAdventurer!.value(forKeyPath: "portrait") as! String)
-        //questImageView.image = UIImage(named: selectedAdventurer!.value(forKeyPath: "portrait") as! String)!
+        questImageView.image = portrait
+        questLabel1.text = name
+        questLabel3.text = String(level)
+        questLabel2.text = profession + "\nAttack: " + String(attack) + "\nHP: " + String(current_hp) + "/" + String(max_hp)
         
         //TIMER EVERY TWO SECONDS.
         timer = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
         
         // Do any additional setup after loading the view.
+    }
+    
+    // This function is used to set/update the text labels
+    func setLabels() {
+        
+        
+        
     }
     
     //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS

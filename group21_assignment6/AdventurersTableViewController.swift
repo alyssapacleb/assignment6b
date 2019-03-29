@@ -78,7 +78,8 @@ class AdventurersTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedAdventurer = Adventurers[indexPath.row]
-        print(selectedAdventurer!)
+        self.performSegue(withIdentifier: "QuestViewSegue", sender: self)
+        //print(selectedAdventurer!)
     }
 
     /*

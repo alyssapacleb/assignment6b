@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zjw-wi-xWq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zjw-wi-xWq">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -79,7 +77,6 @@
                                     <outlet property="tableLabel1" destination="Gzo-zb-cRF" id="Sb0-DZ-Qzm"/>
                                     <outlet property="tableLabel2" destination="1V5-gD-R2y" id="FsP-8Z-8nM"/>
                                     <outlet property="tableLabel3" destination="17B-Av-TwT" id="8lx-wr-yfN"/>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="QuestViewSegue" id="hZ6-Vb-bUr"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -91,6 +88,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="QuestViewSegue" id="mkE-Sl-Tsp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4jr-iG-6A9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -149,7 +149,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OFR-Xs-kA8">
-                                                    <rect key="frame" x="8" y="8" width="101" height="101"/>
+                                                    <rect key="frame" x="8" y="28" width="101" height="81"/>
                                                 </imageView>
                                             </subviews>
                                         </view>
