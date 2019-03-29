@@ -15,6 +15,7 @@ class Enemy {
     var name: String
     var level: Int
     var hp: Int
+    var curhp: Int
     var attack: Int
     
     init(name: String, level: Int, hp: Int, attack: Int) {
@@ -22,10 +23,20 @@ class Enemy {
         self.name = name
         self.level = level
         self.hp = hp
+        self.curhp = hp
         self.attack = attack
         
     }
     
+    convenience init() {
+        let selectedName = arc4random_uniform(3)
+        let nameList:[String] = ["Enemy1","Enemy2","Enemy3"]
+        let name_ = nameList[Int(selectedName)]
+        let _level = Int(arc4random_uniform(5) + 1)
+        let _hp = _level * 10
+        let _attack = Int(arc4random_uniform(5)+1)*_level
+        self.init(name: name_, level: _level, hp: _hp, attack: _attack)
+    }
 }
 
 class QuestViewController: UIViewController {
@@ -36,12 +47,16 @@ class QuestViewController: UIViewController {
     @IBOutlet weak var questLabel3: UILabel!
     @IBOutlet weak var questTextView: UITextView!
     @IBAction func endQuest(_ sender: Any) {
-        timer.invalidate()
+        timer1.invalidate()
+        timer2.invalidate()
         self.dismiss(animated: true, completion: endQuest)
     }
     
-    var timer = Timer()
+    var timer1 = Timer()
+    var timer2 = Timer()
+    
     var currentAdventurer: NSManagedObject?
+    var currentEnemy: Enemy?
     
     // Adventurer variables to be set when view loads
     var adv_name: String?
@@ -53,6 +68,8 @@ class QuestViewController: UIViewController {
     var adv_maxhp: Int?
     var adv_level: Int?
     var adv_portrait: UIImage?
+    var delayEnemy:Timer?
+    var delay = 1
     
     
     override func viewDidLoad() {
@@ -70,6 +87,8 @@ class QuestViewController: UIViewController {
         adv_maxhp = (currentAdventurer!.value(forKeyPath: "total_hitpoints") as! IntegerLiteralType)
         adv_level = (currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
         
+        currentEnemy = Enemy()
+        
         questImageView.image = adv_portrait!
         questLabel1.text = adv_name!
         questLabel3.text = String(adv_level!)
@@ -77,7 +96,12 @@ class QuestViewController: UIViewController {
         questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
         
         //TIMER EVERY TWO SECONDS.
-        timer = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
+        timer1 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer), userInfo: nil, repeats: true)
+        
+        
+        delayEnemy = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(enemyDelay), userInfo: nil, repeats: true)
+       
+        
         
         // Do any additional setup after loading the view.
     }
@@ -91,16 +115,60 @@ class QuestViewController: UIViewController {
         
     }
     
+    @objc func enemyDelay() {
+        delay -= 1
+        if delay <= 0 {
+            delayEnemy!.invalidate()
+            delayEnemy = nil
+            timer2 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
+        }
+    }
+    
     //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS
     @objc func reloadTimer() {
         // var TEXTVIEW DISPLAY = (name) attacks for (AtMod*random number between 5-10) damage
-        var damage = arc4random_uniform(5)+1 // MULTIPLY BY ATTACK MODIFIER
-        var strDamage = String(damage)
-        var theHeroName = "Yuffie" //CHANGE TO NSOBJECT WITH KEY VALUE NAME
-        //var theEnemyHealth = arc4random_uniform(15)+55
-        //var strEnemyHealth = String(theEnemyHealth)
-        print(theHeroName + " attacks for " + strDamage + " damage")
-        //print("enemy health: " + strEnemyHealth)
+        let damage = Int(arc4random_uniform(5)+1)*Int(adv_attack!) // MULTIPLY BY ATTACK MODIFIER
+        let strDamage = String(damage)
+        let theHeroName = adv_name! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
+        questTextView?.text = (questTextView?.text)! + "\n" + theHeroName + " attacks for " + strDamage + " damage"
+        currentEnemy?.curhp -= damage
+        var currentLevel = currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType
+        if (currentEnemy?.curhp)! <= 0 {
+            timer2.invalidate()
+            questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!"
+            //================= increase level in table view display =================
+            //currentAdventurer!.value(forKeyPath: "level") += 1
+            
+            currentAdventurer!.setValue(currentLevel + 1, forKey: "level")
+            //print(currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
+            
+            currentEnemy = Enemy()
+            
+            timer2 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
+        }
+        
+    }
+    
+    //THIS FUNCTION LOADS UP THE TIMER EVERY 2 SECONDS
+    @objc func reloadTimer2() {
+        // var TEXTVIEW DISPLAY = (name) attacks for (AtMod*random number between 5-10) damage
+        let randomN = Int(arc4random_uniform(2))
+        if randomN == 0 {
+            let damage = Int(arc4random_uniform(5)+1)*(currentEnemy?.attack)! // MULTIPLY BY ATTACK MODIFIER
+            let strDamage = String(damage)
+            let enemyName = (currentEnemy?.name)! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
+            questTextView?.text = (questTextView?.text)! + "\n" + enemyName + " attacks for " + strDamage + " damage"
+            adv_currenthp! -= damage
+            if adv_currenthp! <= 0 {
+                timer1.invalidate()
+                timer2.invalidate()
+                adv_currenthp! = 0
+                questTextView?.text = (questTextView?.text)! + "\n" + adv_name! + " is defeated!" + "\nThe quest ended."
+            }
+            questLabel2.text = adv_profession! + "\nAttack: " + String(adv_attack!) + "\nDefense: " + String(adv_defense!) + "\nEvasion: " + String(adv_evasion!) + "\nHP: " + String(adv_currenthp!) + "/" + String(adv_maxhp!)
+        } else {
+            questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is waiting..."
+        }
         
     }
     

@@ -74,7 +74,6 @@
 				60C1C3C72239630100F43FAE /* Assets.xcassets */,
 				60C1C3C92239630100F43FAE /* LaunchScreen.storyboard */,
 				965B5391223B10C100CC6F2D /* AdventurersTableViewCell.swift */,
-				965B5393223B10EE00CC6F2D /* RecruitmentViewController.swift */,
 				965B5397223B113B00CC6F2D /* RecruitmentCollectionViewCell.swift */,
 				60C1C3C12239630000F43FAE /* Main.storyboard */,
 				965B538F223B109D00CC6F2D /* AdventurersViewController.swift */,
@@ -82,8 +81,9 @@
 				60C1C3CC2239630100F43FAE /* Info.plist */,
 				9629EC47223C94EA00D594FB /* Adventurers.plist */,
 				60C1C3C42239630000F43FAE /* group21_assignment6.xcdatamodeld */,
-				965B5395223B10FF00CC6F2D /* QuestViewController.swift */,
+				965B5393223B10EE00CC6F2D /* RecruitmentViewController.swift */,
 				60952234224AB051001F6C9C /* AdventurersTableViewController.swift */,
+				965B5395223B10FF00CC6F2D /* QuestViewController.swift */,
 			);
 			path = group21_assignment6;
 			sourceTree = "<group>";

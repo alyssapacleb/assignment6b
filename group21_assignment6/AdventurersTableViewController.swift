@@ -134,7 +134,7 @@ class AdventurersTableViewController: UITableViewController {
         
         if segue.identifier == "QuestViewSegue" {
             let ExchangeViewData = segue.destination as! QuestViewController
-            ExchangeViewData.currentAdventurer = selectedAdventurer
+            ExchangeViewData.currentAdventurer = selectedAdventurer!
         }
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
