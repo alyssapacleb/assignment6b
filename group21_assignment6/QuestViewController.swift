@@ -132,11 +132,18 @@ class QuestViewController: UIViewController {
         let theHeroName = adv_name! //CHANGE TO NSOBJECT WITH KEY VALUE NAME
         questTextView?.text = (questTextView?.text)! + "\n" + theHeroName + " attacks for " + strDamage + " damage"
         currentEnemy?.curhp -= damage
+        var currentLevel = currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType
         if (currentEnemy?.curhp)! <= 0 {
             timer2.invalidate()
             questTextView?.text = (questTextView?.text)! + "\n" + (currentEnemy?.name)! + " is defeated!"
-            currentEnemy = Enemy()
             //================= increase level in table view display =================
+            //currentAdventurer!.value(forKeyPath: "level") += 1
+            
+            currentAdventurer!.setValue(currentLevel + 1, forKey: "level")
+            //print(currentAdventurer!.value(forKeyPath: "level") as! IntegerLiteralType)
+            
+            currentEnemy = Enemy()
+            
             timer2 = Timer.scheduledTimer(timeInterval:2.0, target: self, selector: #selector(reloadTimer2), userInfo: nil, repeats: true)
         }
         
