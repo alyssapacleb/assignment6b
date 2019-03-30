@@ -41,6 +41,7 @@ class RecruitmentViewController: UIViewController, UITextFieldDelegate, UICollec
     }
 
     private func accessPlist() {
+        adventurers = [String]()
         let inputFile = Bundle.main.path(forResource:"Adventurers",
                                          ofType: "plist")
         let inputArray = NSArray(contentsOfFile: inputFile!)

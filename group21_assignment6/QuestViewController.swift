@@ -38,8 +38,8 @@ class Enemy: CustomStringConvertible {
         let nameList:[String] = ["Glob", "Blob", "Slob", "Daniel Sanchez", "Tyson Smitter"]
         let selectedName = arc4random_uniform(UInt32(nameList.count))
         let name_ = nameList[Int(selectedName)]
-        let _level = Int(arc4random_uniform(5) + 1)
-        let _hp = _level * 10
+        let _level = Int(arc4random_uniform(5)) + Int(selectedName)
+        let _hp = _level * Int(selectedName + 1) * 10
         let _attack = Int(arc4random_uniform(5)+1)*_level
         self.init(name: name_, level: _level, hp: _hp, attack: _attack)
     }

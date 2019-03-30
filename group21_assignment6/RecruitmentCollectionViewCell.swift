@@ -15,5 +15,10 @@ class RecruitmentCollectionViewCell: UICollectionViewCell {
     func displayContent(image: UIImage){
         imageView.image = image
     }
+ 
+    override func prepareForReuse() {
+        self.layer.borderWidth = 0
+        super.prepareForReuse()
+    }
     
 }
